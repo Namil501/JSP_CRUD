@@ -1,0 +1,27 @@
+.login{
+	margin-top:100px;
+}
+.header{
+	padding-top:20px;
+	padding-bottom:20px;
+}
+.row-eq-height{
+	display: flax;
+	flax-wrap:wrap;
+}
+.sidebar-sub{
+	margin-top:20px;
+	margin-left:10px;
+}
+.search-label{
+	margin-bottom:10px;
+}
+.section{
+	margin-top:20px;
+	margin-left:20px;
+
+}
+.footer{
+	margin-top:10px;
+	text-align:center;
+}

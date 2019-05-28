@@ -1,0 +1,19 @@
+.header{
+	background-color:#83b9c5;
+}
+.footer{
+	background-color:#6477a5;
+}
+.search-label{
+	background-color:#86bae5;
+}
+.footer p{
+	color:#d0d0ac;
+}
+.form-label{
+	text-align:right;
+}
+.label-right{
+	display:block;
+	text-align:right;
+}
