@@ -35,7 +35,7 @@
 				<div class="col-lg-9">
 					<div class="login">
 						<p>社員IDとパスワードを入力してください。</p>
-						<form action="index">
+						<form action="index" method="post">
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="form-group form-inline">

@@ -27,6 +27,7 @@ public class Login extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		EmployeeDAO dao = new EmployeeDAO();
+		PrintWriter out = response.getWriter();
 		//System.out.println(request.getParameter("emp_id"));
 		//System.out.println(request.getParameter("emp_pw"));
 
@@ -38,7 +39,12 @@ public class Login extends HttpServlet {
 			session.setAttribute("emp_id", id);
 			request.getRequestDispatcher("list/list.html").forward(request, response);
 		}else{
-
+			System.out.println("login fail");
+			out.println("<meta charset='UTF-8'>");
+			out.println("<script>");
+			out.println("alert('ログイン失敗');");
+            out.println("location.href='servlet_crud/index.jsp';");
+			out.println("</script>");
 		}
 
 	}
