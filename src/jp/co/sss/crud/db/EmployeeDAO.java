@@ -3,36 +3,49 @@ package jp.co.sss.crud.db;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
+import jp.co.sss.crud.bean.Employee;
 import jp.co.sss.crud.util.Check;
 
 public class EmployeeDAO {
 
-	public static void selectAllSQL(String sql) {
-		//�p�����^sql�̃N�G�������s���郁�b�\�[�h
-		//���������employee�e�[�u���S�ẴJ�������o�͂��郁�b�\�[�h
-
+	//select * from [table name]
+	public static List<Employee> selectAllSQL(String table) {
+		List<Employee> empList = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement pst = null;
 		ResultSet reslt = null;
+		String sql;
+		String tmp;
 
 		try {
 			conn = DBM.getConnection();
+			sql = "select * from "+ table +" order by emp_id asc";
 			pst = conn.prepareStatement(sql);
 			reslt = pst.executeQuery();
 
-			//employee�e�[�u���̃J������format�ɍ��킹�ďo�͂���B
-			System.out.println(String.format("|%-4s \t|%-10s \t|%-4s \t|%-10s \t|%-8s|", "�Ј�ID", "�Ј���", "����", "���N����", "������"));
 			if(reslt.next()){
 				 do{
-					//Util.java��printEmployeeTalbe��fomat�ɍ��킹�ďo�͂��郁�b�\�[�h�B
-					//�o�͏����igender�͒j���E����,�������͐����ł͂Ȃ��{���̕������Łj
-					Check.printEmployeeTable(reslt.getString("EMP_ID"), reslt.getString("EMP_NAME"), reslt.getInt("gender"), reslt.getDate("BIRTHDAY").toString(), reslt.getString("DEPT_ID"));
+					Employee emp = new Employee();
+					emp.setEmp_id(reslt.getInt("emp_id"));
+					emp.setEmp_name(reslt.getString("emp_name"));
+					tmp = reslt.getInt("gender")==1?"男性":"女性";
+					emp.setGender(tmp);
+					tmp = reslt.getDate("BIRTHDAY").toString();
+					tmp = tmp.replaceAll("-", "/");
+					emp.setBirthday(tmp);
+					tmp = EmployeeDAO.searchDept(reslt.getString("dept_id"));
+					emp.setDept_id(tmp);
+					tmp = reslt.getInt("authority") == 1?"管理者":"一般";
+					emp.setAuthority(tmp);
+					emp.setAddress(reslt.getString("address"));
+					empList.add(emp);
 				}while(reslt.next());
 			}else {
-				System.out.println("�Ј����o�^����Ă��܂���B");
+				empList = null;
 			}
-
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -40,13 +53,11 @@ public class EmployeeDAO {
 			DBM.close(pst);
 			DBM.close(conn);
 		}
+		return empList;
 	}
+	//
 	public static void selectWhereSQL(String table, String condition, String con_val) {
-		/*
-		 * select����where�������Ă�sql��
-		 * condition�͏����̃J����
-		 * con_val��condition�����̃f�[�^
-		 * */
+		Employee emp = new Employee();
 		Connection conn = null;
 		PreparedStatement pst = null;
 		ResultSet reslt = null;
@@ -61,59 +72,11 @@ public class EmployeeDAO {
 
 			reslt = pst.executeQuery();
 
-
-			//employee�e�[�u���̃J������format�ɍ��킹�ďo�͂���B�ҏW����Ɠ��ꐫ�̂��߂ɑ���select���b�\�[�h���ҏW���Ȃ��Ⴞ�߁B
-			System.out.println(String.format("|%-4s \t|%-10s \t|%-4s \t|%-10s \t|%-8s|", "�Ј�ID", "�Ј���", "����", "���N����", "������"));
 			if(reslt.next()) {
 				do{
-					//Util.java��printEmployeeTalbe��fomat�ɍ��킹�ďo�͂��郁�b�\�[�h�B
-					//�o�͏����igender�͒j���E����,�������͐����ł͂Ȃ��{���̕������Łj
-					Check.printEmployeeTable(reslt.getString("EMP_ID"), reslt.getString("EMP_NAME"), reslt.getInt("gender"), reslt.getDate("BIRTHDAY").toString(), reslt.getString("DEPT_ID"));
+					emp = Check.printEmployeeTable(reslt.getInt("EMP_ID"), reslt.getString("EMP_NAME"), reslt.getInt("gender"), reslt.getDate("BIRTHDAY").toString(), reslt.getString("DEPT_ID"));
 				}while(reslt.next());
 			}else{
-				System.out.println("�Y������Ј��͑��݂��܂���B");
-			}
-
-		}catch(Exception e) {
-			e.printStackTrace();
-		}finally {
-			DBM.close(reslt);
-			DBM.close(pst);
-			DBM.close(conn);
-		}
-	}
-	public static void selectWhereSQL(String table, String condition) {
-
-		/*
-		 * selectWhereSQL(String table, String condition, String con_val)�ƂɂĂ邯��
-		 * like���g��SQL���ł���B
-		 * like���g��select���̏ꍇ�͂������g���ׂ��B
-		 * */
-
-		Connection conn = null;
-		PreparedStatement pst = null;
-		ResultSet reslt = null;
-		String sql="select * from "+ table +" where ";
-		try {
-			conn = DBM.getConnection();
-
-			sql = sql + condition + " order by emp_id asc";
-
-			pst = conn.prepareStatement(sql);
-
-			reslt = pst.executeQuery();
-
-
-			//employee�e�[�u���̃J������format�ɍ��킹�ďo�͂���B�ҏW����Ɠ��ꐫ�̂��߂ɑ���select���b�\�[�h���ҏW���Ȃ��Ⴞ�߁B
-			System.out.println(String.format("|%-4s \t|%-10s \t|%-4s \t|%-10s \t|%-8s|", "�Ј�ID", "�Ј���", "����", "���N����", "������"));
-			if(reslt.next()) {
-				do{
-					//Util.java��printEmployeeTalbe��fomat�ɍ��킹�ďo�͂��郁�b�\�[�h�B
-					//�o�͏����igender�͒j���E����,�������͐����ł͂Ȃ��{���̕������Łj
-					Check.printEmployeeTable(reslt.getString("EMP_ID"), reslt.getString("EMP_NAME"), reslt.getInt("gender"), reslt.getDate("BIRTHDAY").toString(), reslt.getString("DEPT_ID"));
-				}while(reslt.next());
-			}else{
-				System.out.println("�Y������Ј��͑��݂��܂���B");
 			}
 
 		}catch(Exception e) {
@@ -125,20 +88,13 @@ public class EmployeeDAO {
 		}
 	}
 	public static String[] selectWhereSQLForUpdate(String table, String condition, String con_val) {
-		/*
-		 * selectWhereSQL()�Ɠ����@�\�����A
-		 * �X�V�p�̃��b�\�[�h���B
-		 * �Ⴄ�Ƃ���͎Ј�ID����͂��A���̎Ј��̃��R�[�h��
-		 * String�^�̔z��arr�ɕۑ������̃f�[�^���o�͂��邱�Ƃ��B
-		 *
-		 * */
-
+		Employee emp = new Employee();
 		Connection conn = null;
 		PreparedStatement pst = null;
 		ResultSet reslt = null;
 		String sql="select * from "+ table +" where ";
 
-		//return�ŕԂ����Ɏg���ϐ�
+
 		String[] arr= {null, null, null, null, null};
 
 		try {
@@ -152,22 +108,19 @@ public class EmployeeDAO {
 			reslt = pst.executeQuery();
 
 
-			//employee�e�[�u���̃J������format�ɍ��킹�ďo�͂���B�ҏW����Ɠ��ꐫ�̂��߂ɑ���select���b�\�[�h���ҏW���Ȃ��Ⴞ�߁B
+
 			System.out.println(String.format("|%-4s \t|%-10s \t|%-4s \t|%-10s \t|%-8s|", "�Ј�ID", "�Ј���", "����", "���N����", "������"));
 			if(reslt.next()) {
 				do{
-					//arr��String�^�����炷�ׂẴf�[�^��String�^�ŕς��Ċe�C���f�b�N�X�ɕۑ��B
-					//�X�V���郁�b�\�[�h���X�V���Ȃ��f�[�^�̏ꍇ���͂Ȃ��ɂ��邯��
-					//���̎����f���邽�߂⌳�̃f�[�^����͂��邽�߂�arr�z��ɕۑ������̃f�[�^��Ԃ��B
+
 					arr[0] = reslt.getString("EMP_ID");
 					arr[1] = reslt.getString("EMP_NAME");
 					arr[2] = reslt.getString("GENDER");
 					arr[3] = reslt.getDate("BIRTHDAY").toString();
 					arr[4] = reslt.getString("DEPT_ID");
 
-					//Util.java��printEmployeeTalbe��fomat�ɍ��킹�ďo�͂��郁�b�\�[�h�B
-					//�o�͏����igender�͒j���E����,�������͐����ł͂Ȃ��{���̕������Łj
-					Check.printEmployeeTable(reslt.getString("EMP_ID"), reslt.getString("EMP_NAME"), reslt.getInt("gender"), reslt.getDate("BIRTHDAY").toString(), reslt.getString("DEPT_ID"));
+
+					emp = Check.printEmployeeTable(reslt.getInt("EMP_ID"), reslt.getString("EMP_NAME"), reslt.getInt("gender"), reslt.getDate("BIRTHDAY").toString(), reslt.getString("DEPT_ID"));
 				}while(reslt.next());
 			}else{
 				System.out.println("�Y������Ј��͑��݂��܂���B");
@@ -185,9 +138,7 @@ public class EmployeeDAO {
 	}
 	public static void insertSQL() {
 
-		/*
-		 * employee table�ɓo�^�iinsert�j����@�\�̃��b�\�[�h���B
-		 * */
+
 		Connection conn = null;
 		PreparedStatement pst = null;
 		ResultSet reslt = null;
@@ -229,9 +180,7 @@ public class EmployeeDAO {
 	}
 	public static void updateSQL() {
 
-		/*
-		 *employee�e�[�u�����X�V���郁�b�\�[�h���B
-		 * */
+
 		Connection conn = null;
 		PreparedStatement pst = null;
 		ResultSet reslt = null;
@@ -243,7 +192,7 @@ public class EmployeeDAO {
 		String birthday;
 		String dept;
 		String tmp=null;
-		//�󗓂œ��͎󂯂������̃f�[�^�ōX�V���邽�߂ɁA���̌��̃f�[�^��ۑ�����String �z��
+
 		String[] arr= {null, null, null, null, null};
 
 		String sqlString="update employee set emp_name= ?, gender = ?, birthday = ?, dept_id = ? where emp_id = ?";
@@ -252,12 +201,11 @@ public class EmployeeDAO {
 			emp_id_integer = Check.isIntFalseLoop("�X�V����Ј��̎Ј�ID����͂��Ă��������F", 1, 9999);
 			emp_id = Integer.toString(emp_id_integer);
 
-			//�󂯂�emp_id��employee�e�[�u�����烌�R�[�h��T���A�o�͌�A���̃��R�[�h�̃J�����̃f�[�^��arr�z��ɕۑ�
+
 			arr=selectWhereSQLForUpdate("employee","emp_id = ?", emp_id);
 
 			if(arr[0]!=null) {
-				//tmp�ɍX�V����f�[�^���󂯂ď����ɍ��킹�Ă邩���f���A�󗓂���͂����ꍇ�͌��̃f�[�^��ۑ�����B
-				//���̃f�[�^��arr�z��ɂ���B
+
 				tmp = Check.isStringFalseLoop("�Ј����F", 0, 30);
 				name = tmp.isEmpty()?arr[1]:tmp;
 
@@ -290,25 +238,18 @@ public class EmployeeDAO {
 		}
 	}
 	public static void selectEmpName() {
-		/*
-		 * �Ј��̖��O��employee�e�[�u�����猟�����郁�b�\�[�h���B
-		 * ������selectWhereSQL�iString table, String condition�j���g���Ă���B
-		 * */
 		String name;
 		String condition = "emp_name like ";
 		try {
 			name = Check.isStringFalseLoop("�Ј�������͂��Ă��������F", 1, 30);
 			name = "'%" + name + "%'";
-			selectWhereSQL("employee", condition + name);
+			selectWhereSQL("employee", condition , name);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	public static void selectDeptName() {
-		/*
-		 * �������Ō������郁�b�\�[�h���B
-		 * ������selectWhereSQL(String table, String condition, String con_val)���g���Ă���B
-		 * */
+
 		String id;
 		int id_integer;
 		String condition = "dept_id = ?";
@@ -321,11 +262,7 @@ public class EmployeeDAO {
 		}
 	}
 	public static void deleteTable(String table, String column) {
-		/*
-		 * employee�e�[�u���̃��R�[�h���폜���郁�b�\�[�h���B
-		 * �폜��������͎Ј�ID�B
-		 *
-		 * */
+
 		Connection conn = null;
 		PreparedStatement pst = null;
 		String emp_id;
@@ -353,9 +290,7 @@ public class EmployeeDAO {
 		}
 	}
 	public static String searchDept(String dept_id) {
-		/*
-		 * department�e�[�u����dept_id���������A���������󂯂ĕԂ����b�\�[�h���B
-		 * */
+
 		Connection conn = null;
 		PreparedStatement pst = null;
 		ResultSet reslt = null;
@@ -379,7 +314,7 @@ public class EmployeeDAO {
 		}
 		return dept_name;
 	}
-	//前の授業で学んだコードを最初コピーして修正
+
 	public int login(int id, String pw) {
 		int success = 0;
 		try {

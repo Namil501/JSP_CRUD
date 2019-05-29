@@ -4,11 +4,11 @@ public class Employee {
 	private int emp_id;
 	private String emp_pass;
 	private String emp_name;
-	private int gender;
+	private String gender;
 	private String address;
 	private String birthday;
-	private int authority;
-	private int dept_id;
+	private String authority;
+	private String dept_id;
 	public int getEmp_id() {
 		return emp_id;
 	}
@@ -27,10 +27,10 @@ public class Employee {
 	public void setEmp_name(String emp_name) {
 		this.emp_name = emp_name;
 	}
-	public int getGender() {
+	public String getGender() {
 		return gender;
 	}
-	public void setGender(int gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 	public String getAddress() {
@@ -45,16 +45,16 @@ public class Employee {
 	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
-	public int getAuthority() {
+	public String getAuthority() {
 		return authority;
 	}
-	public void setAuthority(int authority) {
+	public void setAuthority(String authority) {
 		this.authority = authority;
 	}
-	public int getDept_id() {
+	public String getDept_id() {
 		return dept_id;
 	}
-	public void setDept_id(int dept_id) {
+	public void setDept_id(String dept_id) {
 		this.dept_id = dept_id;
 	}
 }

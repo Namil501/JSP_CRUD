@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.text.DateFormat;
 
 import jp.co.sss.crud.db.*;
+import jp.co.sss.crud.bean.Employee;
 
 public class Check {
 
@@ -167,26 +168,31 @@ public class Check {
 		}
 		return ret;
 	}
-	public static void printEmployeeTable(String empID, String empName, int gender, String birthday, String dept_id) {
-		/*
-		 * EmployeeTable�̃J�����̏o�͂��郁�b�\�[�h
-		 * */
+	public static Employee printEmployeeTable(int empID, String empName, int gender, String birthday, String dept_id) {
+		Employee emp = new Employee();
 		String dept;
 		String date;
 		String gender_string;
 		if(gender == 1) {
-			gender_string = "�j��";
+			gender_string = "男性";
 		}else
 		{
-			gender_string = "����";
+			gender_string = "女性";
 		}
 		date = birthday;
 		date = date.replaceAll("-", "/");
 		dept = dept_id;
 		dept = EmployeeDAO.searchDept(dept);
-		System.out.println(
-				String.format("|%-4s \t|%-10s \t|%-4s \t|%-10s \t|%-8s|",
-						empID, empName, gender_string, date, dept)
-		);
+		emp.setEmp_id(empID);
+		emp.setEmp_name(empName);
+		emp.setGender(gender_string);
+		emp.setBirthday(date);
+		emp.setDept_id(dept);
+		return emp;
+	}
+	public static int checkAuthority(String empID){
+		int authority=0;
+
+		return authority;
 	}
 }
