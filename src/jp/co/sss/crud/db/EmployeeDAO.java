@@ -379,4 +379,29 @@ public class EmployeeDAO {
 		}
 		return dept_name;
 	}
+	//前の授業で学んだコードを最初コピーして修正
+	public int login(int id, String pw) {
+		int success = 0;
+		try {
+			Connection con = DBM.getConnection();
+			String sql = "SELECT * FROM employee WHERE emp_id=? AND emp_pass=?";
+			PreparedStatement pst = con.prepareStatement(sql);
+			pst.setInt(1, id);
+			pst.setString(2, pw);
+			ResultSet rs = pst.executeQuery();
+
+			if (rs.next()) {
+				success = 1;
+				return success;
+			} else {
+				return success;
+			}
+
+		} catch (Exception e) {
+			success = -1;
+			e.printStackTrace();
+		}
+		return success;
+
+	}
 }

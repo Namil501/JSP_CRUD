@@ -35,7 +35,7 @@
 				<div class="col-lg-9">
 					<div class="login">
 						<p>社員IDとパスワードを入力してください。</p>
-						<form action="<%=stdHTML.rootPath %>html/list/list.html">
+						<form action="index">
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="form-group form-inline">
@@ -43,7 +43,7 @@
 											<label for="emp_id" style="display:block;text-align:right;">社員ID</label>
 										</div>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" id="emp_id"/>
+											<input type="text" class="form-control" id="emp_id" name="emp_id"/>
 										</div>
 									</div>
 								</div>
@@ -55,7 +55,7 @@
 											<label for="emp_pw" style="display:block;text-align:right;">パスワード</label>
 										</div>
 										<div class="col-lg-10">
-											<input type="password" class="form-control" id="emp_pw"/>
+											<input type="password" class="form-control" id="emp_pw"name="emp_pw"/>
 										</div>
 									</div>
 								</div>

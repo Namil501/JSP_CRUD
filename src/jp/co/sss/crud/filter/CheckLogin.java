@@ -10,15 +10,15 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
 /**
- * Servlet Filter implementation class Encoding
+ * Servlet Filter implementation class CheckLogin
  */
-@WebFilter(urlPatterns={"/en"})
-public class Encoding implements Filter {
+@WebFilter(urlPatterns={"/cheklogin"})
+public class CheckLogin implements Filter {
 
     /**
-     * Default constructor.
+     * Default constructor. 
      */
-    public Encoding() {
+    public CheckLogin() {
         // TODO Auto-generated constructor stub
     }
 
@@ -35,14 +35,10 @@ public class Encoding implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		// place your code here
-		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
 
-		System.out.println("Encodingフィルタの前処理");
-
+		System.out.println("ChekLogin");
 		// pass the request along the filter chain
 		chain.doFilter(request, response);
-		System.out.println("Encodingフィルタの後処理");
 	}
 
 	/**
