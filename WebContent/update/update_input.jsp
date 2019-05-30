@@ -112,18 +112,20 @@
 									<div class="col-lg-4">
 										<div class="form-check-inline">
 											<label class="form-check-label" for="sex1">
-												<%if(emp.getGender()=="1"){ %>
+												<%if(Integer.parseInt(emp.getGender())==1){ %>
 												<input type="radio" class="form-check-input" id="sex1" name="sex" value="1" checked="checked">男性
-												<%} %>
+												<%}else { %>
 												<input type="radio" class="form-check-input" id="sex1" name="sex" value="1">男性
+												<%} %>
 											</label>
 										</div>
 										<div class="form-check-inline">
 											<label class="form-check-label" for="sex2">
-												<%if(emp.getGender()=="1"){ %>
+												<%if(Integer.parseInt(emp.getGender())==1){ %>
 												<input type="radio" class="form-check-input" id="sex2" name="sex" value="2">女性
-												<%} %>
+												<%}else{ %>
 												<input type="radio" class="form-check-input" id="sex2" name="sex" value="2" checked="checked">女性
+												<%} %>
 											</label>
 										</div>
 									</div>
@@ -154,18 +156,20 @@
 									<div class="col-lg-4">
 										<div class="form-check-inline">
 											<label class="form-check-label" for="notAdmin">
-												<%if(emp.getAddress() == "1") {%>
+												<%if(Integer.parseInt(emp.getAuthority())  == 1) {%>
 												<input type="radio" class="form-check-input" id="notAdmin" name="isAdmin" value="1" checked="checked">一般
-												<%} %>
+												<%}else{ %>
 												<input type="radio" class="form-check-input" id="notAdmin" name="isAdmin" value="1">一般
+												<%} %>
 											</label>
 										</div>
 										<div class="form-check-inline">
 											<label class="form-check-label" for="admin">
-												<%if(emp.getAddress() == "1") {%>
+												<%if(Integer.parseInt(emp.getAuthority())  == 1) {%>
 												<input type="radio" class="form-check-input" id="admin" name="isAdmin" value="2" >管理者
-												<%} %>
+												<%}else{ %>
 												<input type="radio" class="form-check-input" id="admin" name="isAdmin" value="2" checked="checked">管理者
+												<%} %>
 											</label>
 										</div>
 									</div>
@@ -176,11 +180,11 @@
 									</div>
 									<div class="col-lg-4">
 										<select class="form-control" id="dept_name">
-											<%if( emp.getDept_id() == "1" ){%>
+											<%if( Integer.parseInt(emp.getDept_id()) == 1 ){%>
 											<option value="営業部" selected="selected">営業部</option>
 											<option value="経理部">経理部</option>
 											<option value="総務部">総務部</option>
-											<%}else if(emp.getDept_id() == "2" ){%>
+											<%}else if(Integer.parseInt(emp.getDept_id()) == 2 ){%>
 											<option value="営業部">営業部</option>
 											<option value="経理部" selected="selected">経理部</option>
 											<option value="総務部">総務部</option>
