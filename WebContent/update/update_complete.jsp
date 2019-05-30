@@ -1,4 +1,12 @@
 <!doctype html>
+<%@page
+	language="java"
+	contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"
+    import="jp.co.sss.crud.util.HTMLStructure"%>
+<%
+	HTMLStructure stdHTML = new HTMLStructure();
+%>
 <html lang="jp">
 	<head>
 		<!-- Required meta tags -->
@@ -6,8 +14,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrinkto-fit=no">
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-		<link rel="stylesheet" href="/html_crud_kimnamil/css/layout.css?v=1.3">
-		<link rel="stylesheet" href="/html_crud_kimnamil/css/style.css?v=1.3">
+		<link rel="stylesheet" href="<%=stdHTML.rootPath %>css/layout.css?v=1.2">
+		<link rel="stylesheet" href="<%=stdHTML.rootPath %>css/style.css?v=1.4">
 		<title>社員管理システム</title>
 	</head>
 	<body>
@@ -77,7 +85,7 @@
 						<div class="row">
 							<div class="col-lg-4 offset-lg-4" style="text-align:center;">
 								<p>社員登録処理が完了しました。</p>
-								<a href="/html_crud_kimnamil/html/list/list.html">一覧表示に戻る</a>
+								<a href="<%=stdHTML.rootPath%>list/list.jsp">一覧表示に戻る</a>
 							</div>
 						</div>
 					</div>

@@ -1,4 +1,20 @@
 <!doctype html>
+<%@page import="jp.co.sss.crud.db.EmployeeDAO"%>
+<%@page
+	language="java"
+	contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"
+    import="jp.co.sss.crud.util.HTMLStructure"%>
+<%
+	HTMLStructure stdHTML = new HTMLStructure();
+	String emp_name = (String)session.getAttribute("emp_name");
+	String emp_addr = (String)session.getAttribute("emp_addr");
+	String authority = Integer.parseInt((String)session.getAttribute("authority")) == 1 ? "一般":"管理者";
+	String emp_birth = (String)session.getAttribute("emp_birth");
+	String dept_id = (String)session.getAttribute("dept_id");
+	dept_id = EmployeeDAO.searchDept(dept_id);
+	String gender = Integer.parseInt((String)session.getAttribute("gender")) ==1?"男性":"女性";
+%>
 <html lang="jp">
 	<head>
 		<!-- Required meta tags -->
@@ -87,7 +103,7 @@
 								<p style="display:block;text-align:right;">社員名：</p>
 							</div>
 							<div class="col-lg-4">
-								<p>大谷次郎</p>
+								<p><%=emp_name %></p>
 							</div>
 						</div>
 						<div class="row">
@@ -95,7 +111,7 @@
 								<label for="emp_name"style="display:block;text-align:right;">性別：</label>
 							</div>
 							<div class="col-lg-4">
-								<p>男性</p>
+								<p><%=gender %></p>
 							</div>
 						</div>
 						<div class="row">
@@ -103,7 +119,7 @@
 								<label for="emp_addr"style="display:block;text-align:right;">住所：</label>
 							</div>
 							<div class="col-lg-4">
-								<p >千葉県</p>
+								<p><%=emp_addr %></p>
 							</div>
 						</div>
 						<div class="row">
@@ -111,7 +127,7 @@
 								<p style="display:block;text-align:right;">誕生日：</p>
 							</div>
 							<div class="col-lg-4">
-								<p>1979/7/2</p>
+								<p><%=emp_birth %></p>
 							</div>
 						</div>
 						<div class="row">
@@ -119,7 +135,7 @@
 								<label for="emp_admin" style="display:block;text-align:right;">権限：</label>
 							</div>
 							<div class="col-lg-4">
-								<p>管理者</p>
+								<p><%=authority %></p>
 							</div>
 						</div>
 						<div class="row">
@@ -127,17 +143,17 @@
 								<label for="dept_name"style="display:block;text-align:right;">部署名：</label>
 							</div>
 							<div class="col-lg-4">
-								<p>総務部</p>
+								<p><%=dept_id %></p>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-3 offset-lg-5">
-								<a class="btn btn-info" href="/html_crud_kimnamil/html/update/update_complete.html">更新</a>
+								<a class="btn btn-info" href="<%=stdHTML.rootPath %>update/update_complete">更新</a>
 							</div>
 						</div>
 						<div class="row" style="margin-top:5px;">
 							<div class="col-lg-3 offset-lg-5">
-								<a class="btn btn-info" href="/html_crud_kimnamil/html/list/list.html">戻る</a>
+								<a class="btn btn-info" href="<%=stdHTML.rootPath %>list/list.jsp">戻る</a>
 							</div>
 						</div>
 					</div>

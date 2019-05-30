@@ -12,10 +12,10 @@ import jp.co.sss.crud.bean.Employee;
 import jp.co.sss.crud.db.EmployeeDAO;
 
 /**
- * Servlet implementation class RegistComplete
+ * Servlet implementation class UpdateComplete
  */
-@WebServlet(urlPatterns={"/regist/regist_complete"})
-public class RegistComplete extends HttpServlet {
+@WebServlet(urlPatterns={"/update/update_complete"})
+public class UpdateComplete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -40,10 +40,11 @@ public class RegistComplete extends HttpServlet {
 			session.removeAttribute("dept_id");
 			emp.setGender((String)session.getAttribute("gender"));
 			session.removeAttribute("gender");
-			EmployeeDAO.insertSQLForEmployee(emp);
-			request.getRequestDispatcher("/regist/regist_complete.jsp").forward(request, response);
+			emp.setEmp_id(Integer.parseInt(session.getAttribute("update_emp_id").toString()));
+			EmployeeDAO.updateSQL(emp);
+			request.getRequestDispatcher("/update/update_complete.jsp").forward(request, response);
 		}catch(Exception e){
-			System.out.println("Regist fail by RegistComplete");
+			System.out.println("update fail by RegistComplete");
 			request.getRequestDispatcher("/list/list.jsp").forward(request, response);
 		}
 	}

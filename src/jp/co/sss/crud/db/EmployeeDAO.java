@@ -108,7 +108,7 @@ public class EmployeeDAO {
 				emp.setEmp_name(reslt.getString("emp_name"));
 				emp.setEmp_pass(reslt.getString("emp_pass"));
 				emp.setGender(reslt.getString("GENDER"));
-				emp.setBirthday(reslt.getDate("BIRTHDAY").toString());
+				emp.setBirthday(reslt.getDate("BIRTHDAY").toString().replaceAll("-", "/"));
 				emp.setAddress(reslt.getString("address"));
 				emp.setAuthority(reslt.getString("authority"));
 				emp.setDept_id(reslt.getString("DEPT_ID"));
@@ -140,7 +140,6 @@ public class EmployeeDAO {
 		String birthday = emp.getBirthday();
 		String authority = emp.getAuthority();
 		String dept = emp.getDept_id();
-		System.out.println(pw + " " + name + " " + gender + " " + addr + " " +birthday+ " " +authority+ " " +dept);
 		String sqlString="insert into employee(emp_id, emp_pass, emp_name, gender, address, birthday, authority, dept_id) values(seq_emp.nextval, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
@@ -158,6 +157,7 @@ public class EmployeeDAO {
 			pst.executeUpdate();
 			System.out.println("insert!");
 		}catch(Exception e) {
+			System.out.println("insert Fail!");
 			e.printStackTrace();
 		}finally {
 			DBM.close(reslt);
@@ -166,8 +166,6 @@ public class EmployeeDAO {
 		}
 	}
 	public static void updateSQL(Employee emp) {
-
-
 		Connection conn = null;
 		PreparedStatement pst = null;
 		ResultSet reslt = null;
@@ -179,6 +177,7 @@ public class EmployeeDAO {
 		String birthday = emp.getBirthday();
 		String authority = emp.getAuthority();
 		String dept = emp.getDept_id();
+		String id = Integer.toString(emp.getEmp_id());
 
 		String sqlString="update employee set emp_pass = ?, emp_name = ?, gender = ?, address = ?, birthday = ?, authority = ?, dept_id = ? where emp_id = ?";
 
@@ -194,6 +193,7 @@ public class EmployeeDAO {
 				pst.setString(5, birthday);
 				pst.setString(6, authority);
 				pst.setString(7, dept);
+				pst.setString(8, id);
 
 				pst.executeUpdate();
 			}
