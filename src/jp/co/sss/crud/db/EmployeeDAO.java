@@ -87,46 +87,36 @@ public class EmployeeDAO {
 			DBM.close(conn);
 		}
 	}
-	public static String[] selectWhereSQLForUpdate(String table, String condition, String con_val) {
+	public static Employee selectWhereSQLForUpdate(String table, String con_val) {
 		Employee emp = new Employee();
 		Connection conn = null;
 		PreparedStatement pst = null;
 		ResultSet reslt = null;
-		String sql="select * from "+ table +" where ";
+		String sql="select * from "+ table +" where emp_id = ?";
 
-
-		String[] arr= {null, null, null, null, null};
 
 		try {
 			conn = DBM.getConnection();
-
-			sql = sql + condition;
 
 			pst = conn.prepareStatement(sql);
 			pst.setString(1, con_val);
 
 			reslt = pst.executeQuery();
-
-
-
-			System.out.println(String.format("|%-4s \t|%-10s \t|%-4s \t|%-10s \t|%-8s|", "�Ј�ID", "�Ј���", "����", "���N����", "������"));
 			if(reslt.next()) {
-				do{
+				System.out.println("in if by selectWhereSQLForUpadate");
+				emp.setEmp_id(Integer.parseInt(reslt.getString("emp_id")));
+				emp.setEmp_name(reslt.getString("emp_name"));
+				emp.setEmp_pass(reslt.getString("emp_pass"));
+				emp.setGender(reslt.getString("GENDER"));
+				emp.setBirthday(reslt.getDate("BIRTHDAY").toString());
+				emp.setAddress(reslt.getString("address"));
+				emp.setAuthority(reslt.getString("authority"));
+				emp.setDept_id(reslt.getString("DEPT_ID"));
 
-					arr[0] = reslt.getString("EMP_ID");
-					arr[1] = reslt.getString("EMP_NAME");
-					arr[2] = reslt.getString("GENDER");
-					arr[3] = reslt.getDate("BIRTHDAY").toString();
-					arr[4] = reslt.getString("DEPT_ID");
-
-
-					emp = Check.printEmployeeTable(reslt.getInt("EMP_ID"), reslt.getString("EMP_NAME"), reslt.getInt("gender"), reslt.getDate("BIRTHDAY").toString(), reslt.getString("DEPT_ID"));
-				}while(reslt.next());
 			}else{
-				System.out.println("�Y������Ј��͑��݂��܂���B");
-				return arr;
+				System.out.println("in else by selectWhereSQLForUpadate");
+				emp=null;
 			}
-
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -134,7 +124,7 @@ public class EmployeeDAO {
 			DBM.close(pst);
 			DBM.close(conn);
 		}
-		return arr;
+		return emp;
 	}
 	public static void insertSQLForEmployee(Employee emp) {
 
@@ -175,54 +165,35 @@ public class EmployeeDAO {
 			DBM.close(conn);
 		}
 	}
-	public static void updateSQL() {
+	public static void updateSQL(Employee emp) {
 
 
 		Connection conn = null;
 		PreparedStatement pst = null;
 		ResultSet reslt = null;
 
-		String emp_id;
-		int emp_id_integer;
-		String name;
-		String sex;
-		String birthday;
-		String dept;
-		String tmp=null;
+		String pass = emp.getEmp_pass();
+		String name = emp.getEmp_name();
+		String gender = emp.getGender();
+		String address = emp.getAddress();
+		String birthday = emp.getBirthday();
+		String authority = emp.getAuthority();
+		String dept = emp.getDept_id();
 
-		String[] arr= {null, null, null, null, null};
-
-		String sqlString="update employee set emp_name= ?, gender = ?, birthday = ?, dept_id = ? where emp_id = ?";
+		String sqlString="update employee set emp_pass = ?, emp_name = ?, gender = ?, address = ?, birthday = ?, authority = ?, dept_id = ? where emp_id = ?";
 
 		try {
-			emp_id_integer = Check.isIntFalseLoop("�X�V����Ј��̎Ј�ID����͂��Ă��������F", 1, 9999);
-			emp_id = Integer.toString(emp_id_integer);
 
-
-			arr=selectWhereSQLForUpdate("employee","emp_id = ?", emp_id);
-
-			if(arr[0]!=null) {
-
-				tmp = Check.isStringFalseLoop(0, 30);
-				name = tmp.isEmpty()?arr[1]:tmp;
-
-				tmp = Check.isIntFalseLoop("���ʁi�P�F�j���A�Q�F�����j:", 0, 2, true);
-				sex = tmp.isEmpty()?arr[2]:tmp;
-
-				tmp = Check.isDateFalseLoop("���N�����i����N/��/���j�F",true);
-				birthday = tmp.isEmpty()?arr[3]:tmp;
-
-				tmp = Check.isIntFalseLoop("����ID�i�P�F�c�ƕ��A�Q�F�o�����A�R�F�������j�F", 0, 3, true);
-				dept = tmp.isEmpty()?arr[4]:tmp;
-
+			if(emp!=null) {
 				conn = DBM.getConnection();
 				pst = conn.prepareStatement(sqlString);
-				pst.setString(1, name);
-				pst.setString(2, sex);
-				pst.setString(3, birthday);
-				pst.setString(4, dept);
-				pst.setString(5, emp_id);
-				System.out.println("�Ј������X�V���܂����B");
+				pst.setString(1, pass);
+				pst.setString(2, name);
+				pst.setString(3, gender);
+				pst.setString(4, address);
+				pst.setString(5, birthday);
+				pst.setString(6, authority);
+				pst.setString(7, dept);
 
 				pst.executeUpdate();
 			}

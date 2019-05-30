@@ -118,10 +118,16 @@
 									<td><%=emp.getAuthority() %></td>
 									<td><%=emp.getDept_id() %></td>
 									<td>
-										<a class="btn btn-info" href="/html_crud_kimnamil/html/update/update_input.html">変更</a>
+										<form action = "/servlet_crud/update/update" >
+											<input type = "hidden" name = "emp_id" value="<%=emp.getEmp_id() %>">
+											<input class="btn btn-info" type = "submit" value="変更">
+										</form>
 									</td>
 									<td>
-										<a class="btn btn-danger" href="/html_crud_kimnamil/html/delete/delete_check.html">削除</a>
+										<form action = "/servlet_crud/delete/delete_check.html">
+											<input type = "hidden" name = "emp_id" value = "<%=emp.getEmp_id() %>">
+											<input class="btn btn-danger" type = "submit" value = "削除">
+										</form>
 									</td>
 								</tr>
 								<% }%>

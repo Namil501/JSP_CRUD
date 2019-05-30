@@ -1,4 +1,7 @@
 <!doctype html>
+<%@page import="org.apache.tomcat.jni.Stdlib"%>
+<%@page import="jp.co.sss.crud.db.EmployeeDAO"%>
+<%@page import="jp.co.sss.crud.bean.Employee"%>
 <%@page
 	language="java"
 	contentType="text/html; charset=UTF-8"
@@ -6,6 +9,8 @@
     import="jp.co.sss.crud.util.HTMLStructure"%>
 <%
 	HTMLStructure stdHTML = new HTMLStructure();
+	Employee emp = new Employee();
+	emp = EmployeeDAO.selectWhereSQLForUpdate("employee", (String)session.getAttribute("update_emp_id"));
 %>
 <html lang="jp">
 	<head>
@@ -89,7 +94,7 @@
 										<label for="emp_pw" style="display:block;text-align:right;">パスワード：</label>
 									</div>
 									<div class="col-lg-4">
-										<input type="password" class="form-control" id="emp_pw" value="1234"/>
+										<input type="password" class="form-control" id="emp_pw" value="<%=emp.getEmp_pass() %>"/>
 									</div>
 								</div>
 								<div class="row form-group">
@@ -97,7 +102,7 @@
 										<label for="emp_name" style="display:block;text-align:right;">社員名：</label>
 									</div>
 									<div class="col-lg-4">
-										<input type="text" class="form-control" id="emp_name" value="田中次郎"/>
+										<input type="text" class="form-control" id="emp_name" value="<%=emp.getEmp_name() %>">
 									</div>
 								</div>
 								<div class="row form-group">
@@ -107,12 +112,18 @@
 									<div class="col-lg-4">
 										<div class="form-check-inline">
 											<label class="form-check-label" for="sex1">
+												<%if(emp.getGender()=="1"){ %>
 												<input type="radio" class="form-check-input" id="sex1" name="sex" value="1" checked="checked">男性
+												<%} %>
+												<input type="radio" class="form-check-input" id="sex1" name="sex" value="1">男性
 											</label>
 										</div>
 										<div class="form-check-inline">
 											<label class="form-check-label" for="sex2">
+												<%if(emp.getGender()=="1"){ %>
 												<input type="radio" class="form-check-input" id="sex2" name="sex" value="2">女性
+												<%} %>
+												<input type="radio" class="form-check-input" id="sex2" name="sex" value="2" checked="checked">女性
 											</label>
 										</div>
 									</div>
@@ -122,15 +133,15 @@
 										<label for="emp_addr" style="display:block;text-align:right;">住所：</label>
 									</div>
 									<div class="col-lg-4">
-										<input type="text" class="form-control" id="emp_addr" value="千葉県"/>
+										<input type="text" class="form-control" id="emp_addr" value="<%=emp.getAddress() %>"/>
 									</div>
 								</div>
 								<div class="row form-group">
 									<div class="col-lg-2 offset-lg-3">
-										<label for="emp_birth" style="display:block;text-align:right;">社員名：</label>
+										<label for="emp_birth" style="display:block;text-align:right;">誕生日：</label>
 									</div>
 									<div class="col-lg-4">
-										<input type="text" class="form-control" id="emp_birth" value="1979/7/2"/>
+										<input type="text" class="form-control" id="emp_birth" value="<%=emp.getBirthday() %>"/>
 									</div>
 									<div class="col-lg-3">
 										<p>(YYYY/MM/DD)</p>
@@ -143,11 +154,17 @@
 									<div class="col-lg-4">
 										<div class="form-check-inline">
 											<label class="form-check-label" for="notAdmin">
+												<%if(emp.getAddress() == "1") {%>
+												<input type="radio" class="form-check-input" id="notAdmin" name="isAdmin" value="1" checked="checked">一般
+												<%} %>
 												<input type="radio" class="form-check-input" id="notAdmin" name="isAdmin" value="1">一般
 											</label>
 										</div>
 										<div class="form-check-inline">
 											<label class="form-check-label" for="admin">
+												<%if(emp.getAddress() == "1") {%>
+												<input type="radio" class="form-check-input" id="admin" name="isAdmin" value="2" >管理者
+												<%} %>
 												<input type="radio" class="form-check-input" id="admin" name="isAdmin" value="2" checked="checked">管理者
 											</label>
 										</div>
@@ -159,9 +176,19 @@
 									</div>
 									<div class="col-lg-4">
 										<select class="form-control" id="dept_name">
-											<option value="営業部">営業部</option>
+											<%if( emp.getDept_id() == "1" ){%>
+											<option value="営業部" selected="selected">営業部</option>
 											<option value="経理部">経理部</option>
 											<option value="総務部">総務部</option>
+											<%}else if(emp.getDept_id() == "2" ){%>
+											<option value="営業部">営業部</option>
+											<option value="経理部" selected="selected">経理部</option>
+											<option value="総務部">総務部</option>
+											<%}else {%>
+											<option value="営業部">営業部</option>
+											<option value="経理部">経理部</option>
+											<option value="総務部"selected="selected">総務部</option>
+											<%} %>
 										</select>
 									</div>
 								</div>
@@ -172,7 +199,7 @@
 								</div>
 								<div class="row" style="margin-top:5px;">
 									<div class="col-lg-3 offset-lg-5">
-										<a class="btn btn-info" href="/html_crud_kimnamil/html/list/list.html">戻る</a>
+										<a class="btn btn-info" href="/servlet_crud/list/list.jsp">戻る</a>
 									</div>
 								</div>
 							</div>

@@ -1,4 +1,5 @@
 <!doctype html>
+<%@page import="jp.co.sss.crud.bean.Employee"%>
 <%@page
 	language="java"
 	contentType="text/html; charset=UTF-8"
@@ -6,6 +7,8 @@
     import="jp.co.sss.crud.util.HTMLStructure"%>
 <%
 	HTMLStructure stdHTML = new HTMLStructure();
+	Employee emp = new Employee();
+
 %>
 <html lang="jp">
 	<head>
