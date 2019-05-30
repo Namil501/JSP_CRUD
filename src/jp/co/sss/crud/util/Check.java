@@ -44,9 +44,6 @@ public class Check {
 		return true;
 	}
 	public static boolean checkDatePossibility(String str) {
-		/*
-		 * �p�����^str�iDate�`�j��������Date�`�����f���郁�b�\�[�h
-		 * */
 		boolean chk=false;
 		try {
 			DateFormat format = DateFormat.getDateInstance();
@@ -54,7 +51,6 @@ public class Check {
 			format.parse(str);
 			chk = true;
 		}catch(Exception e) {
-			System.out.println("�������`���i����N/��/���j�œ��t����͂��Ă��������B");
 			return false;
 		}
 		return chk;
@@ -106,7 +102,7 @@ public class Check {
 		ret = Integer.parseInt(input);
 		return Integer.toString(ret);
 	}
-	public static String isStringFalseLoop(String str, int min, int max) {
+	public static String isStringFalseLoop(int min, int max) {
 		/*
 		 * �p�����^str��min�ȏ�max�ȉ��̕�����œ��͎󂯂�܂Ń��[�v
 		 * */
@@ -116,7 +112,6 @@ public class Check {
 		boolean chk = false;
 		try {
 			do {
-				System.out.print(str);
 				input = br.readLine();
 				chk = checkStringLength(input, min, max);
 			}while(chk == false);

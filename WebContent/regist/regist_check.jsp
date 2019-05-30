@@ -1,4 +1,21 @@
 <!doctype html>
+<%@page import="jp.co.sss.crud.db.EmployeeDAO"%>
+<%@page
+	language="java"
+	contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"
+    import="jp.co.sss.crud.util.HTMLStructure"%>
+<%
+	HTMLStructure stdHTML = new HTMLStructure();
+	String emp_name = (String)session.getAttribute("emp_name");
+	String emp_addr = (String)session.getAttribute("emp_addr");
+	String authority = Integer.parseInt((String)session.getAttribute("authority")) == 1 ? "一般":"管理者";
+	String emp_birth = (String)session.getAttribute("emp_birth");
+	String dept_id = (String)session.getAttribute("dept_id");
+	dept_id = EmployeeDAO.searchDept(dept_id);
+	String gender = Integer.parseInt((String)session.getAttribute("gender")) ==1?"男性":"女性";
+
+%>
 <html lang="jp">
 	<head>
 		<!-- Required meta tags -->
@@ -6,8 +23,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrinkto-fit=no">
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-		<link rel="stylesheet" href="/html_crud_kimnamil/css/layout.css?v=1.3">
-		<link rel="stylesheet" href="/html_crud_kimnamil/css/style.css?v=1.3">
+		<link rel="stylesheet" href="<%=stdHTML.rootPath %>css/layout.css?v=1.2">
+		<link rel="stylesheet" href="<%=stdHTML.rootPath %>css/style.css?v=1.4">
 		<title>社員管理システム</title>
 	</head>
 	<body>
@@ -87,7 +104,7 @@
 								<p style="display:block;text-align:right;">社員名：</p>
 							</div>
 							<div class="col-lg-4">
-								<p>山口洋子</p>
+								<p><%=emp_name%></p>
 							</div>
 						</div>
 						<div class="row">
@@ -95,7 +112,7 @@
 								<label for="emp_name" style="display:block;text-align:right;">性別：</label>
 							</div>
 							<div class="col-lg-4">
-								<p>女性</p>
+								<p><%=gender %></p>
 							</div>
 						</div>
 						<div class="row">
@@ -103,7 +120,7 @@
 								<label for="emp_addr" style="display:block;text-align:right;">住所：</label>
 							</div>
 							<div class="col-lg-4">
-								<p>埼玉県</p>
+								<p><%=emp_addr %></p>
 							</div>
 						</div>
 						<div class="row">
@@ -111,7 +128,7 @@
 								<p style="display:block;text-align:right;">生年月日：</p>
 							</div>
 							<div class="col-lg-4">
-								<p>1990/11/3</p>
+								<p><%=emp_birth %></p>
 							</div>
 						</div>
 						<div class="row">
@@ -119,7 +136,7 @@
 								<label for="emp_admin"style="display:block;text-align:right;">権限：</label>
 							</div>
 							<div class="col-lg-4">
-								<p>一般</p>
+								<p><%=authority %></p>
 							</div>
 						</div>
 						<div class="row">
@@ -127,17 +144,17 @@
 								<label for="dept_name"style="display:block;text-align:right;">部署名：</label>
 							</div>
 							<div class="col-lg-4">
-								<p>総務部</p>
+								<p><%=dept_id %></p>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-3 offset-lg-5">
-								<a class="btn btn-info" href="/html_crud_kimnamil/html/list/list.html">登録</a>
+								<a class="btn btn-info" href="<%=stdHTML.rootPath %>regist/regist_complete">登録</a>
 							</div>
 						</div>
 						<div class="row" style="margin-top:5px;">
 							<div class="col-lg-3 offset-lg-5">
-								<a class="btn btn-info" href="/html_crud_kimnamil/html/list/list.html">戻る</a>
+								<a class="btn btn-info" href="<%=stdHTML.rootPath %>list/list.jsp">戻る</a>
 							</div>
 						</div>
 					</div>

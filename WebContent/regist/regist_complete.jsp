@@ -1,4 +1,12 @@
 <!doctype html>
+<%@page
+	language="java"
+	contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"
+    import="jp.co.sss.crud.util.HTMLStructure"%>
+<%
+	HTMLStructure stdHTML = new HTMLStructure();
+%>
 <html lang="jp">
 	<head>
 		<!-- Required meta tags -->
@@ -77,7 +85,7 @@
 						<div class="row">
 							<div class="col-lg-4 offset-lg-4" style="text-align:center;">
 								<p>社員登録処理が完了しました。</p>
-								<a href="/html_crud_kimnamil/html/list/list.html">一覧表示に戻る</a>
+								<a href="<%= stdHTML.rootPath %>list/list.jsp">一覧表示に戻る</a>
 							</div>
 						</div>
 					</div>

@@ -38,7 +38,7 @@ public class EmployeeDAO {
 					emp.setBirthday(tmp);
 					tmp = EmployeeDAO.searchDept(reslt.getString("dept_id"));
 					emp.setDept_id(tmp);
-					tmp = reslt.getInt("authority") == 1?"管理者":"一般";
+					tmp = reslt.getInt("authority") == 1?"一般":"管理者";
 					emp.setAuthority(tmp);
 					emp.setAddress(reslt.getString("address"));
 					empList.add(emp);
@@ -136,40 +136,37 @@ public class EmployeeDAO {
 		}
 		return arr;
 	}
-	public static void insertSQL() {
+	public static void insertSQLForEmployee(Employee emp) {
 
 
 		Connection conn = null;
 		PreparedStatement pst = null;
 		ResultSet reslt = null;
 
-		String name;
-		String sex;
-		int sex_integer;
-		String birthday;
-		String dept;
-		int dept_integer;
-
-		String sqlString="insert into employee(emp_id, emp_name, gender, birthday, dept_id) values(seq_emp.nextval, ?, ?, ?, ?)";
+		String pw = emp.getEmp_pass();
+		String name = emp.getEmp_name();
+		String gender = emp.getGender();
+		String addr = emp.getAddress();
+		String birthday = emp.getBirthday();
+		String authority = emp.getAuthority();
+		String dept = emp.getDept_id();
+		System.out.println(pw + " " + name + " " + gender + " " + addr + " " +birthday+ " " +authority+ " " +dept);
+		String sqlString="insert into employee(emp_id, emp_pass, emp_name, gender, address, birthday, authority, dept_id) values(seq_emp.nextval, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
-			name = Check.isStringFalseLoop("�Ј����F", 1, 30);
-			sex_integer = Check.isIntFalseLoop("���ʁi�P�F�j���A�Q�F�����j:", 1, 2);
-			sex = Integer.toString(sex_integer);
-			birthday = Check.isDateFalseLoop("���N�����i����N/��/���j�F");
-			dept_integer = Check.isIntFalseLoop("����ID�i�P�F�c�ƕ��A�Q�F�o�����A�R�F�������j�F", 1, 3);
-			dept = Integer.toString(dept_integer);
 
 			conn = DBM.getConnection();
 			pst = conn.prepareStatement(sqlString);
-			pst.setString(1, name);
-			pst.setString(2, sex);
-			pst.setString(3, birthday);
-			pst.setString(4, dept);
+			pst.setString(1, pw);
+			pst.setString(2, name);
+			pst.setString(3, gender);
+			pst.setString(4, addr);
+			pst.setString(5, birthday);
+			pst.setString(6, authority);
+			pst.setString(7, dept);
 
 			pst.executeUpdate();
-
-			System.out.println("�Ј�����o�^���܂����B");
+			System.out.println("insert!");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -206,7 +203,7 @@ public class EmployeeDAO {
 
 			if(arr[0]!=null) {
 
-				tmp = Check.isStringFalseLoop("�Ј����F", 0, 30);
+				tmp = Check.isStringFalseLoop(0, 30);
 				name = tmp.isEmpty()?arr[1]:tmp;
 
 				tmp = Check.isIntFalseLoop("���ʁi�P�F�j���A�Q�F�����j:", 0, 2, true);
@@ -241,7 +238,7 @@ public class EmployeeDAO {
 		String name;
 		String condition = "emp_name like ";
 		try {
-			name = Check.isStringFalseLoop("�Ј�������͂��Ă��������F", 1, 30);
+			name = Check.isStringFalseLoop(1, 30);
 			name = "'%" + name + "%'";
 			selectWhereSQL("employee", condition , name);
 		}catch(Exception e) {

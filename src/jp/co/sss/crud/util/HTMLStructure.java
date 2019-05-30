@@ -25,4 +25,49 @@ public class HTMLStructure {
 		out.println("</body>");
 		out.println("</html>");
 	}
+	public void sidebar(PrintWriter out){
+		out.println("<div class='row sidebar-sub'>");
+			out.println("<div class='col-lg-12'>");
+		//修正必要
+				out.println("<form action='"+rootPath+"list/list_empty.html'>");
+					out.println("<div class='form-group'>");
+						out.println("<div class='row search-label'>");
+							out.println("<label for='emp_name'>社員名検索</label>");
+						out.println("</div>");
+						out.println("<div class='row'>");
+							out.println("<div class='col-lg-8'>");
+								out.println("<input type='text' class='form-control' id='emp_name'>");
+							out.println("</div>");
+							out.println("<div class='col-lg-4'>");
+								out.println("<button type='submit' class='btn btn-info'>検索</button>");
+							out.println("</div>");
+						out.println("</div>");
+					out.println("</div>");
+				out.println("</form>");
+			out.println("</div>");
+		out.println("</div>");
+		out.println("<div class='row sidebar-sub'>");
+			out.println("<div class='col-lg-12'>");
+				out.println("<form action='"+rootPath+"list/list_empty.html'>");
+					out.println("<div class='form-group'>");
+						out.println("<div class='row search-label'>");
+							out.println("<label class='form-label' for='dept_name'>部署名検索</label>");
+						out.println("</div>");
+						out.println("<div class='row'>");
+							out.println("<div class='col-lg-8'>");
+								out.println("<select class='form-control' id='dept_name'>");
+									out.println("<option value='営業部'>営業部</option>");
+									out.println("<option value='経理部'>経理部</option>");
+									out.println("<option value='総務部'>総務部</option>");
+								out.println("</select>");
+							out.println("</div>");
+							out.println("<div class='col-lg-4'>");
+								out.println("<button type='submit' class='btn btn-info'>検索</button>");
+							out.println("</div>");
+						out.println("</div>");
+					out.println("</form>");
+				out.println("</div>");
+			out.println("</div>");
+		out.println("</div>");
+	}
 }

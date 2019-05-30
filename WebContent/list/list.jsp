@@ -87,7 +87,7 @@
 						</div>
 						<div class="row">
 							<div class="col-lg-3 offset-lg-9">
-								<a href="/html_crud_kimnamil/html/regist/regist_input.html">新規社員登録</a>
+								<a href="<%= stdHTML.rootPath %>regist/regist_input.jsp">新規社員登録</a>
 							</div>
 						</div>
 						<table class="table table-bordered">

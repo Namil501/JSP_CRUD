@@ -10,14 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import jp.co.sss.crud.bean.Employee;
 import jp.co.sss.crud.db.EmployeeDAO;
-import jp.co.sss.crud.util.HTMLStructure;
+import jp.co.sss.crud.util.Check;
 
 /**
- * Servlet implementation class Login
+ * Servlet implementation class RegistCheck
  */
-@WebServlet("/index")
-public class Login extends HttpServlet {
+@WebServlet(urlPatterns={"/regist/regist_check"})
+public class RegistCheck extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -25,28 +26,20 @@ public class Login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
 		EmployeeDAO dao = new EmployeeDAO();
+		Employee emp = new Employee();
+		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
-		//System.out.println(request.getParameter("emp_id"));
-		//System.out.println(request.getParameter("emp_pw"));
-
-		int id = Integer.parseInt(request.getParameter("emp_id"));
-		String pw = request.getParameter("emp_pw");
-		int loginStatus = dao.login(id, pw);
-		if(loginStatus == 1){
-			//success
-			session.setAttribute("emp_id", id);
-			request.getRequestDispatcher("list/list.jsp").forward(request, response);
+		if ( Check.checkDatePossibility((String)session.getAttribute("emp_birth")) ){
+			request.getRequestDispatcher("/regist/regist_check.jsp").forward(request, response);
 		}else{
-			System.out.println("login fail");
+			System.out.println("regist fail");
 			out.println("<meta charset='UTF-8'>");
 			out.println("<script>");
-			out.println("alert('ログイン失敗');");
-            out.println("location.href='servlet_crud/index.jsp';");
+			out.println("alert('登録失敗！誕生日の形式が正しくありません。');");
+            out.println("location.href='/servlet_crud/regist/regist.jsp';");
 			out.println("</script>");
 		}
-
 	}
 
 	/**
