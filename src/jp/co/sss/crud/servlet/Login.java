@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import jp.co.sss.crud.db.EmployeeDAO;
-import jp.co.sss.crud.util.HTMLStructure;
 
 /**
  * Servlet implementation class Login
@@ -34,8 +33,15 @@ public class Login extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("emp_id"));
 		String pw = request.getParameter("emp_pw");
 		int loginStatus = dao.login(id, pw);
+		String user_name = EmployeeDAO.searchDept(Integer.toString(id), false);
+		session.setAttribute("login_status", loginStatus);
+		session.setAttribute("user_name", user_name);
 		if(loginStatus == 1){
 			//success
+			session.setAttribute("login_emp_id", id);
+			session.setAttribute("list_condition", 0);
+			request.getRequestDispatcher("list/list_emp.jsp").forward(request, response);
+		}else if(loginStatus == 2){
 			session.setAttribute("login_emp_id", id);
 			session.setAttribute("list_condition", 0);
 			request.getRequestDispatcher("list/list.jsp").forward(request, response);

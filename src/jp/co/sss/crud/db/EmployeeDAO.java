@@ -47,7 +47,7 @@ public class EmployeeDAO {
 					tmp = reslt.getDate("BIRTHDAY").toString();
 					tmp = tmp.replaceAll("-", "/");
 					emp.setBirthday(tmp);
-					tmp = EmployeeDAO.searchDept(reslt.getString("dept_id"));
+					tmp = EmployeeDAO.searchDept(reslt.getString("dept_id"), true);
 					emp.setDept_id(tmp);
 					tmp = reslt.getInt("authority") == 1?"一般":"管理者";
 					emp.setAuthority(tmp);
@@ -69,10 +69,10 @@ public class EmployeeDAO {
 	}
 	//
 	public static void selectWhereSQL(String table, String condition, String con_val) {
-		Employee emp = new Employee();
 		Connection conn = null;
 		PreparedStatement pst = null;
 		ResultSet reslt = null;
+		Employee emp = new Employee();
 		String sql="select * from "+ table +" where ";
 		try {
 			conn = DBM.getConnection();
@@ -217,17 +217,6 @@ public class EmployeeDAO {
 			DBM.close(conn);
 		}
 	}
-	public static void selectEmpName() {
-		String name;
-		String condition = "emp_name like ";
-		try {
-			name = Check.isStringFalseLoop(1, 30);
-			name = "'%" + name + "%'";
-			selectWhereSQL("employee", condition , name);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
 	public static void selectDeptName() {
 
 		String id;
@@ -269,20 +258,27 @@ public class EmployeeDAO {
 		}
 		return ret;
 	}
-	public static String searchDept(String dept_id) {
+	public static String searchDept(String id, boolean isDept) {
 
 		Connection conn = null;
 		PreparedStatement pst = null;
 		ResultSet reslt = null;
-		String dept_name = null;
+		String ret_name = null;
 		String sql="select dept_name from department where dept_id = ?";
+		if(!isDept){
+			sql="select emp_name from employee where emp_id = ?";
+		}
 		try {
 			conn = DBM.getConnection();
 			pst = conn.prepareStatement(sql);
-			pst.setString(1, dept_id);
+			pst.setString(1, id);
 			reslt = pst.executeQuery();
 			if(reslt.next()) {
-				dept_name = reslt.getString("dept_name");
+				if(isDept){
+					ret_name = reslt.getString("dept_name");
+				}else{
+					ret_name = reslt.getString("emp_name");
+				}
 			}
 
 		}catch(Exception e) {
@@ -292,7 +288,7 @@ public class EmployeeDAO {
 			DBM.close(pst);
 			DBM.close(conn);
 		}
-		return dept_name;
+		return ret_name;
 	}
 
 	public int login(int id, String pw) {
@@ -306,12 +302,18 @@ public class EmployeeDAO {
 			ResultSet rs = pst.executeQuery();
 
 			if (rs.next()) {
-				success = 1;
-				return success;
+				sql = "SELECT authority FROM employee WHERE emp_id=" + id;
+				pst = con.prepareStatement(sql);
+				rs = pst.executeQuery();
+				rs.next();
+				if(rs.getInt("authority")==1){
+					success = 1;
+				}else{
+					success = 2;
+				}
 			} else {
-				return success;
+				success = 0;
 			}
-
 		} catch (Exception e) {
 			success = -1;
 			e.printStackTrace();

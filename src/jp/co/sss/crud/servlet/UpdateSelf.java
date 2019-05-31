@@ -21,7 +21,7 @@ public class UpdateSelf extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		String emp_id = (String)session.getAttribute("login_emp_id");
+		String emp_id = Integer.toString((int)session.getAttribute("login_emp_id"));
 		session.setAttribute("update_emp_id", emp_id);
 		request.getRequestDispatcher("/update/update_input.jsp").forward(request, response);
 	}

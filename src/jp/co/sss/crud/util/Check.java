@@ -177,7 +177,7 @@ public class Check {
 		date = birthday;
 		date = date.replaceAll("-", "/");
 		dept = dept_id;
-		dept = EmployeeDAO.searchDept(dept);
+		dept = EmployeeDAO.searchDept(dept, true);
 		emp.setEmp_id(empID);
 		emp.setEmp_name(empName);
 		emp.setGender(gender_string);

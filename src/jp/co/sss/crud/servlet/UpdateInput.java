@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import jp.co.sss.crud.bean.Employee;
-import jp.co.sss.crud.db.EmployeeDAO;
-import jp.co.sss.crud.util.HTMLStructure;
 
 /**
  * Servlet implementation class UpdateInput
@@ -23,7 +21,6 @@ public class UpdateInput extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		Employee emp = new Employee();
 		HttpSession session = request.getSession();
 		emp.setEmp_name(request.getParameter("emp_name"));
@@ -50,7 +47,6 @@ public class UpdateInput extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

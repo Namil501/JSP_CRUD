@@ -12,7 +12,7 @@
 	String authority = Integer.parseInt((String)session.getAttribute("authority")) == 1 ? "一般":"管理者";
 	String emp_birth = (String)session.getAttribute("emp_birth");
 	String dept_id = (String)session.getAttribute("dept_id");
-	dept_id = EmployeeDAO.searchDept(dept_id);
+	dept_id = EmployeeDAO.searchDept(dept_id, true);
 	String gender = Integer.parseInt((String)session.getAttribute("gender")) ==1?"男性":"女性";
 
 %>
@@ -30,62 +30,10 @@
 	<body>
 		<div class="container-fluid">
 			<div class="row header">
-				<div class="col-lg-5">
-					<h1>社員管理システム</h1>
-				</div>
-				<div class="col-lg-2 offset-lg-3 align-self-end">
-					<a href="/html_crud_kimnamil/html/update/update_input.html">ようこそ、田中次郎さん</a>
-				</div>
-				<div class="col-lg-2 align-self-end">
-					<a href="/html_crud_kimnamil/html/index.html">ログアウト</a>
-				</div>
+				<jsp:include page="/jsp_layout/header.jsp" />
 			</div>
 			<div class="row row-eq-height row-main">
-				<div class="col-lg-3 sidebar">
-				<!-- search emp_name -->
-					<div class="row sidebar-sub">
-						<div class="col-lg-12">
-							<form action="/html_crud_kimnamil/html/list/list_empty.html">
-								<div class="form-group">
-									<div class="row search-label">
-										<label for="emp_name">社員名検索</label>
-									</div>
-									<div class="row">
-										<div class="col-lg-8">
-											<input type="text" class="form-control" id="emp_name">
-										</div>
-										<div class="col-lg-4">
-											<button type="submit" class="btn btn-info">検索</button>
-										</div>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-					<div class="row sidebar-sub">
-						<div class="col-lg-12">
-							<form action="/html_crud_kimnamil/html/list/list_empty.html">
-								<div class="form-group">
-									<div class="row search-label">
-										<label class="form-label" for="dept_name">部署名検索</label>
-									</div>
-									<div class="row">
-										<div class="col-lg-8">
-											<select class="form-control" id="dept_name">
-												<option value="営業部">営業部</option>
-												<option value="経理部">経理部</option>
-												<option value="総務部">総務部</option>
-											</select>
-										</div>
-										<div class="col-lg-4">
-											<button type="submit" class="btn btn-info">検索</button>
-										</div>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
+				<jsp:include page="/jsp_layout/sidebar.jsp" />
 				<div class="col-lg-9">
 					<div class="section">
 						<div class="row section-first">
@@ -161,9 +109,7 @@
 				</div>
 			</div>
 			<div class="row footer">
-				<div class="col-lg-12">
-					<p>Copyright(c) Nurinubi.inc All rights reserved</p>
-				</div>
+				<jsp:include page="/jsp_layout/footer.jsp" />
 			</div>
 		</div>
 		<!-- Optional JavaScript -->

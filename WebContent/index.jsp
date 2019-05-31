@@ -74,9 +74,7 @@
 				</div>
 			</div>
 			<div class="row footer">
-				<div class="col-lg-12">
-					<p>Copyright(c) Nurinubi.inc All rights reserved</p>
-				</div>
+				<jsp:include page="/jsp_layout/footer.jsp" />
 			</div>
 		</div>
 	</body>

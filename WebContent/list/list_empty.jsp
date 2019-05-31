@@ -24,62 +24,10 @@
 	<body>
 		<div class="container-fluid">
 			<div class="row header">
-				<div class="col-lg-5">
-					<h1>社員管理システム</h1>
-				</div>
-				<div class="col-lg-2 offset-lg-3 align-self-end">
-					<a href="<%=stdHTML.rootPath%>update/update_self">ようこそ、田中次郎さん</a>
-				</div>
-				<div class="col-lg-2 align-self-end">
-					<a href="<%=stdHTML.rootPath%>logout">ログアウト</a>
-				</div>
+				<jsp:include page="/jsp_layout/header.jsp" />
 			</div>
 			<div class="row row-eq-height row-main">
-				<div class="col-lg-3 sidebar">
-				<!-- search emp_name -->
-					<div class="row sidebar-sub">
-						<div class="col-lg-12">
-							<form action="<%=stdHTML.rootPath%>search_name">
-								<div class="form-group">
-									<div class="row search-label">
-										<label for="search_emp_name">社員名検索</label>
-									</div>
-									<div class="row">
-										<div class="col-lg-8">
-											<input type="text" class="form-control" id="search_emp_name" name="search_emp_name">
-										</div>
-										<div class="col-lg-4">
-											<button type="submit" class="btn btn-info">検索</button>
-										</div>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-					<div class="row sidebar-sub">
-						<div class="col-lg-12">
-							<form action="<%=stdHTML.rootPath%>search_dept">
-								<div class="form-group">
-									<div class="row search-label">
-										<label for="dept_name">部署名検索</label>
-									</div>
-									<div class="row">
-										<div class="col-lg-8">
-											<select class="form-control" id="dept_id" name="dept_id">
-												<option value="1">営業部</option>
-												<option value="2">経理部</option>
-												<option value="3">総務部</option>
-											</select>
-										</div>
-										<div class="col-lg-4">
-											<button type="submit" class="btn btn-info">検索</button>
-										</div>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
+				<jsp:include page="/jsp_layout/sidebar.jsp" />
 				<div class="col-lg-9">
 					<div class="section">
 						<div class="row section-first">
@@ -93,16 +41,14 @@
 						<div class="row">
 							<div class="col-lg-4 offset-lg-4" style="text-align:center;">
 								<p>該当する社員は存在しません。</p>
-								<a href="/html_crud_kimnamil/html/list/list.html">一覧表示に戻る</a>
+								<a href="<%=stdHTML.rootPath%>list/list.html">一覧表示に戻る</a>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="row footer">
-				<div class="col-lg-12">
-					<p>Copyright(c) Nurinubi.inc All rights reserved</p>
-				</div>
+				<jsp:include page="/jsp_layout/footer.jsp" />
 			</div>
 		</div>
 		<!-- Optional JavaScript -->
