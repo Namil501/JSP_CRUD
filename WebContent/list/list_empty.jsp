@@ -86,67 +86,16 @@
 							<p class="list-table-name">社員一覧画面</p>
 						</div>
 						<div class="row">
-							<div class="col-lg-3 offset-lg-9">
-								<a href="<%= stdHTML.rootPath %>regist/regist_input.jsp">新規社員登録</a>
+							<div class="col-3 offset-lg-9">
+								<a href="#">新規社員登録</a>
 							</div>
 						</div>
-						<table class="table table-bordered">
-							<thead>
-								<tr>
-									<th>社員ID</th>
-									<th>社員名</th>
-									<th>性別</th>
-									<th>住所</th>
-									<th>生年月日</th>
-									<th>権限</th>
-									<th>部署名</th>
-									<th>変更</th>
-									<th>削除</th>
-								</tr>
-							</thead>
-							<tbody>
-								<%
-									int list_con = (int)session.getAttribute("list_condition");
-									List<Employee> empAll;
-									switch(list_con){
-									case 1:
-										String search_name = (String)session.getAttribute("search_name");
-										empAll = EmployeeDAO.selectAllSQL("employee", "emp_name", search_name, true);
-										break;
-									case 2:
-										String dept_id = (String)session.getAttribute("search_dept");
-										empAll = EmployeeDAO.selectAllSQL("employee", "dept_id", dept_id, false);
-										break;
-									default:
-										empAll = EmployeeDAO.selectAllSQL("employee", null, null, false);
-										break;
-									}
-									for(Employee emp : empAll){
-								%>
-								<tr>
-									<td><%=emp.getEmp_id() %></td>
-									<td><%=emp.getEmp_name() %></td>
-									<td><%=emp.getGender() %></td>
-									<td><%=emp.getAddress() %></td>
-									<td><%=emp.getBirthday() %></td>
-									<td><%=emp.getAuthority() %></td>
-									<td><%=emp.getDept_id() %></td>
-									<td>
-										<form action = "<%=stdHTML.rootPath %>update/update" >
-											<input type = "hidden" name = "emp_id" value="<%=emp.getEmp_id() %>">
-											<input class="btn btn-info" type = "submit" value="変更">
-										</form>
-									</td>
-									<td>
-										<form action = "<%=stdHTML.rootPath %>delete/delete">
-											<input type = "hidden" name = "emp_id" value = "<%=emp.getEmp_id() %>">
-											<input class="btn btn-danger" type = "submit" value = "削除">
-										</form>
-									</td>
-								</tr>
-								<% }%>
-							</tbody>
-						</table>
+						<div class="row">
+							<div class="col-lg-4 offset-lg-4" style="text-align:center;">
+								<p>該当する社員は存在しません。</p>
+								<a href="/html_crud_kimnamil/html/list/list.html">一覧表示に戻る</a>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

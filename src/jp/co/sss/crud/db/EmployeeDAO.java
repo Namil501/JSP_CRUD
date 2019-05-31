@@ -12,7 +12,7 @@ import jp.co.sss.crud.util.Check;
 public class EmployeeDAO {
 
 	//select * from [table name]
-	public static List<Employee> selectAllSQL(String table) {
+	public static List<Employee> selectAllSQL(String table, String condition, String conditionValue, boolean like) {
 		List<Employee> empList = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement pst = null;
@@ -22,9 +22,20 @@ public class EmployeeDAO {
 
 		try {
 			conn = DBM.getConnection();
-			sql = "select * from "+ table +" order by emp_id asc";
-			pst = conn.prepareStatement(sql);
-			reslt = pst.executeQuery();
+			if(condition == null){
+				sql = "select * from "+ table +" order by emp_id asc";
+				pst = conn.prepareStatement(sql);
+				reslt = pst.executeQuery();
+			}else if(like){
+				sql = "select * from "+ table +" where " + condition + " like "+conditionValue+" order by emp_id asc";
+				pst = conn.prepareStatement(sql);
+				reslt = pst.executeQuery();
+			}else{
+				sql = "select * from "+ table +" where " + condition + " = ? order by emp_id asc";
+				pst = conn.prepareStatement(sql);
+				pst.setString(1, conditionValue);
+				reslt = pst.executeQuery();
+			}
 
 			if(reslt.next()){
 				 do{
@@ -48,6 +59,7 @@ public class EmployeeDAO {
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
+			empList = null;
 		}finally {
 			DBM.close(reslt);
 			DBM.close(pst);
