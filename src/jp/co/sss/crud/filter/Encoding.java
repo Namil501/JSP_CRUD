@@ -38,12 +38,11 @@ public class Encoding implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
-		// place your code here
+		// place your code heretp
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 
 		System.out.println("Encodingフィルタの前処理");
-
 		// pass the request along the filter chain
 		chain.doFilter(request, response);
 		System.out.println("Encodingフィルタの後処理");

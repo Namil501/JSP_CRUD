@@ -31,6 +31,7 @@ public class UpdateCheck extends HttpServlet {
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
 		if ( Check.checkDatePossibility((String)session.getAttribute("emp_birth")) ){
+			
 			request.getRequestDispatcher("/update/update_check.jsp").forward(request, response);
 		}else{
 			System.out.println("update fail");

@@ -69,6 +69,7 @@
 										empAll = EmployeeDAO.selectAllSQL("employee", null, null, false);
 										break;
 									}
+									session.setAttribute("list_condition", 0);
 									for(Employee emp : empAll){
 								%>
 								<tr>

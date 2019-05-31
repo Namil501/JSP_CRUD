@@ -23,7 +23,7 @@ public class UpdateSelf extends HttpServlet {
 		HttpSession session = request.getSession();
 		String emp_id = Integer.toString((int)session.getAttribute("login_emp_id"));
 		session.setAttribute("update_emp_id", emp_id);
-		request.getRequestDispatcher("/update/update_input.jsp").forward(request, response);
+		request.getRequestDispatcher("/update/update").forward(request, response);
 	}
 
 	/**

@@ -101,6 +101,7 @@
 										<p>(YYYY/MM/DD)</p>
 									</div>
 								</div>
+								<%if((int)session.getAttribute("login_status")==2) {%>
 								<div class="row form-group">
 									<div class="col-lg-2 offset-lg-3">
 										<label for="emp_admin" style="display:block;text-align:right;">権限：</label>
@@ -126,6 +127,9 @@
 										</div>
 									</div>
 								</div>
+								<%}else{ %>
+									<input type="hidden" name=authority value=1>
+								<%} %>
 								<div class="row form-group">
 									<div class="col-lg-2 offset-lg-3">
 										<label for="dept_name" style="display:block;text-align:right;">部署名：</label>

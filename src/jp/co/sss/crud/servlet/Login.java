@@ -15,7 +15,7 @@ import jp.co.sss.crud.db.EmployeeDAO;
 /**
  * Servlet implementation class Login
  */
-@WebServlet("/index")
+@WebServlet(urlPatterns={"/index"})
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -29,9 +29,9 @@ public class Login extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		//System.out.println(request.getParameter("emp_id"));
 		//System.out.println(request.getParameter("emp_pw"));
-
-		int id = Integer.parseInt(request.getParameter("emp_id"));
+		String id_string = request.getParameter("emp_id");
 		String pw = request.getParameter("emp_pw");
+		int id = Integer.parseInt(request.getParameter("emp_id"));
 		int loginStatus = dao.login(id, pw);
 		String user_name = EmployeeDAO.searchDept(Integer.toString(id), false);
 		if(loginStatus == 1){
@@ -40,7 +40,7 @@ public class Login extends HttpServlet {
 			session.setAttribute("user_name", user_name);
 			session.setAttribute("login_emp_id", id);
 			session.setAttribute("list_condition", 0);
-			request.getRequestDispatcher("list/list_emp.jsp").forward(request, response);
+			request.getRequestDispatcher("/list/list_emp.jsp").forward(request, response);
 		}else if(loginStatus == 2){
 			session.setAttribute("login_status", loginStatus);
 			session.setAttribute("user_name", user_name);
@@ -55,6 +55,7 @@ public class Login extends HttpServlet {
             out.println("location.href='index.jsp';");
 			out.println("</script>");
 		}
+		session.setAttribute("list_condition", 0);
 
 	}
 

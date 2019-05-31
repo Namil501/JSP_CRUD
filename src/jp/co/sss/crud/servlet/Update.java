@@ -25,6 +25,9 @@ public class Update extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		String emp_id = request.getParameter("emp_id");
+		if(session.getAttribute("update_emp_id")!=null){
+			emp_id = (String)session.getAttribute("update_emp_id");
+		}
 		Employee emp = new Employee();
 		emp = EmployeeDAO.selectWhereSQLForUpdate("employee", emp_id);
 		session.setAttribute("update_emp_id", emp_id);
