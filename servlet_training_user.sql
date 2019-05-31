@@ -21,3 +21,4 @@ INSERT INTO employee VALUES(seq_emp.nextval,'2222','田中二郎',1,'千葉県','1979/0
 INSERT INTO employee VALUES(seq_emp.nextval,'3333','渡辺花子',2,'大阪府','1988/04/23',2,2);
 
 COMMIT;
+select * from employee;

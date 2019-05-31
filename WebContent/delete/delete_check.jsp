@@ -1,4 +1,24 @@
 <!doctype html>
+<%@page import="jp.co.sss.crud.bean.Employee"%>
+<%@page import="jp.co.sss.crud.db.EmployeeDAO"%>
+<%@page
+	language="java"
+	contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"
+    import="jp.co.sss.crud.util.HTMLStructure"%>
+<%
+	HTMLStructure stdHTML = new HTMLStructure();
+	Employee emp = new Employee();
+	emp = EmployeeDAO.selectWhereSQLForUpdate("employee", (String)session.getAttribute("delete_emp_id"));
+
+	String emp_name = emp.getEmp_name();
+	String emp_addr = emp.getAddress();
+	String authority = Integer.parseInt(emp.getAuthority()) == 1 ? "一般":"管理者";
+	String emp_birth = emp.getBirthday();
+	String dept_id = emp.getDept_id();
+	dept_id = EmployeeDAO.searchDept(dept_id);
+	String gender = Integer.parseInt(emp.getGender()) ==1?"男性":"女性";
+%>
 <html lang="jp">
 	<head>
 		<!-- Required meta tags -->
@@ -6,8 +26,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrinkto-fit=no">
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-		<link rel="stylesheet" href="/html_crud_kimnamil/css/layout.css?v=1.3">
-		<link rel="stylesheet" href="/html_crud_kimnamil/css/style.css?v=1.3">
+		<link rel="stylesheet" href="<%=stdHTML.rootPath %>css/layout.css?v=1.2">
+		<link rel="stylesheet" href="<%=stdHTML.rootPath %>css/style.css?v=1.4">
 		<title>社員管理システム</title>
 	</head>
 	<body>
@@ -50,7 +70,7 @@
 							<form action="/html_crud_kimnamil/html/list/list_empty.html">
 								<div class="form-group">
 									<div class="row search-label">
-										<label for="dept_name">部署名検索</label>
+										<label class="form-label" for="dept_name">部署名検索</label>
 									</div>
 									<div class="row">
 										<div class="col-lg-8">
@@ -72,12 +92,72 @@
 				<div class="col-lg-9">
 					<div class="section">
 						<div class="row section-first">
-							<p class="list-table-name">社員削除完了画面</p>
+							<p class="list-table-name">社員削除確認画面</p>
 						</div>
 						<div class="row">
-							<div class="col-lg-4 offset-lg-4" style="text-align:center;">
-								<p>社員削除処理が完了しました。</p>
-								<a href="/html_crud_kimnamil/html/list/list.html">一覧表示に戻る</a>
+							<div class="col-lg-2 offset-lg-3">
+								<p style="display:block;text-align:right;">パスワード：</p>
+							</div>
+								<p>※非表示</p>
+							<div class="col-lg-4">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-2 offset-lg-3">
+								<p style="display:block;text-align:right;">社員名：</p>
+							</div>
+							<div class="col-lg-4">
+								<p><%=emp_name %></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-2 offset-lg-3">
+								<label for="emp_name" style="display:block;text-align:right;">性別：</label>
+							</div>
+							<div class="col-lg-4">
+								<p><%=gender%></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-2 offset-lg-3">
+								<label for="emp_addr" style="display:block;text-align:right;">住所：</label>
+							</div>
+							<div class="col-lg-4">
+								<p><%=emp_addr%></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-2 offset-lg-3">
+								<p style="display:block;text-align:right;">生年月日：</p>
+							</div>
+							<div class="col-lg-4">
+								<p><%=emp_birth%></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-2 offset-lg-3">
+								<label for="emp_admin" style="display:block;text-align:right;">権限：</label>
+							</div>
+							<div class="col-lg-4">
+								<p><%=authority%></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-2 offset-lg-3">
+								<label for="dept_name" style="display:block;text-align:right;">部署名：</label>
+							</div>
+							<div class="col-lg-4">
+								<p><%=dept_id%></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-3 offset-lg-5">
+								<a class="btn btn-info" href="<%=stdHTML.rootPath%>delete/delete_complete">削除</a>
+							</div>
+						</div>
+						<div class="row" style="margin-top:5px;">
+							<div class="col-lg-3 offset-lg-5">
+								<a class="btn btn-info" href="<%=stdHTML.rootPath%>list/list.jsp">戻る</a>
 							</div>
 						</div>
 					</div>

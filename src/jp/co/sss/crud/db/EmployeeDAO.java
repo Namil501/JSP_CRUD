@@ -229,33 +229,33 @@ public class EmployeeDAO {
 			e.printStackTrace();
 		}
 	}
-	public static void deleteTable(String table, String column) {
+	public static int deleteEmpCol(String table, String empID) {
 
 		Connection conn = null;
 		PreparedStatement pst = null;
-		String emp_id;
-		int emp_id_integer;
-		String condition = column + " = ?";
+		int ret = 0;	//0: delete OK, 1: wrong empID, 2: exception
+		String condition = "emp_id = ?";
 		String sql = "delete from " + table + " where " + condition;
 		try {
-			emp_id_integer = Check.isIntFalseLoop("�폜����Ј��̎Ј�ID����͂��Ă��������F", 1, 9999);
-			emp_id = Integer.toString(emp_id_integer);
-
 			conn=DBM.getConnection();
-
 			pst = conn.prepareStatement(sql);
-			pst.setString(1, emp_id);
+			pst.setString(1, empID);
 			if(pst.executeUpdate() > 0 ) {
-				System.out.println("�Ј������폜���܂����B");
+				ret = 0;
+				System.out.println("Delete Complete!");
 			}else {
-				System.out.println("�Y������Ј��͓o�^����Ă��܂���B");
+				ret = 1;
+				System.out.println("Delete Fail!");
 			}
 		}catch(Exception e) {
+			ret = 2;
 			e.printStackTrace();
+			System.out.println("Exception!!!");
 		}finally {
 			DBM.close(pst);
 			DBM.close(conn);
 		}
+		return ret;
 	}
 	public static String searchDept(String dept_id) {
 

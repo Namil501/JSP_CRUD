@@ -28,10 +28,10 @@
 					<h1>社員管理システム</h1>
 				</div>
 				<div class="col-lg-2 offset-lg-3 align-self-end">
-					<a href="/html_crud_kimnamil/html/update/update_input.html">ようこそ、田中次郎さん</a>
+					<a href="<%=stdHTML.rootPath%>update/update_input.jsp">ようこそ、田中次郎さん</a>
 				</div>
 				<div class="col-lg-2 align-self-end">
-					<a href="/html_crud_kimnamil/html/index.html">ログアウト</a>
+					<a href="<%=stdHTML.rootPath%>index.jsp">ログアウト</a>
 				</div>
 			</div>
 			<div class="row row-eq-height row-main">
@@ -118,13 +118,13 @@
 									<td><%=emp.getAuthority() %></td>
 									<td><%=emp.getDept_id() %></td>
 									<td>
-										<form action = "/servlet_crud/update/update" >
+										<form action = "<%=stdHTML.rootPath %>update/update" >
 											<input type = "hidden" name = "emp_id" value="<%=emp.getEmp_id() %>">
 											<input class="btn btn-info" type = "submit" value="変更">
 										</form>
 									</td>
 									<td>
-										<form action = "/servlet_crud/delete/delete_check.html">
+										<form action = "<%=stdHTML.rootPath %>delete/delete">
 											<input type = "hidden" name = "emp_id" value = "<%=emp.getEmp_id() %>">
 											<input class="btn btn-danger" type = "submit" value = "削除">
 										</form>

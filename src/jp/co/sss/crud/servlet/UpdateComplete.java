@@ -42,6 +42,7 @@ public class UpdateComplete extends HttpServlet {
 			session.removeAttribute("gender");
 			emp.setEmp_id(Integer.parseInt(session.getAttribute("update_emp_id").toString()));
 			EmployeeDAO.updateSQL(emp);
+			session.removeAttribute("update_emp_id");
 			request.getRequestDispatcher("/update/update_complete.jsp").forward(request, response);
 		}catch(Exception e){
 			System.out.println("update fail by RegistComplete");
