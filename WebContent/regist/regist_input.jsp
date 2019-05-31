@@ -123,7 +123,7 @@
 								</div>
 								<div class="row" style="margin-top:5px;">
 									<div class="col-lg-3 offset-lg-5">
-										<a class="btn btn-info" href="/html_crud_kimnamil/html/list.html">戻る</a>
+										<a class="btn btn-info" href="<%=stdHTML.rootPath%>list/list">戻る</a>
 									</div>
 								</div>
 							</div>

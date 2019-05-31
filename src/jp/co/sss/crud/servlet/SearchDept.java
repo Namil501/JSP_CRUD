@@ -28,9 +28,9 @@ public class SearchDept extends HttpServlet {
 		session.setAttribute("list_condition", con);
 		session.setAttribute("search_dept", dept_id);
 		if(EmployeeDAO.selectAllSQL("employee", "dept_id", dept_id, false)!=null){
-			request.getRequestDispatcher("list/list.jsp").forward(request, response);
+			request.getRequestDispatcher("/list/list").forward(request, response);
 		}else{
-			request.getRequestDispatcher("list/list_empty.jsp").forward(request, response);
+			request.getRequestDispatcher("/list/list_empty.jsp").forward(request, response);
 		}
 	}
 

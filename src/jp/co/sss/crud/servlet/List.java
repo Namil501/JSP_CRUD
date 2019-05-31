@@ -21,9 +21,17 @@ public class List extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		int con=0;
+		int con = 0;
+		int loginStatus = (int)session.getAttribute("login_status");
 		session.setAttribute("list_condition", con);
-		request.getRequestDispatcher("list/list.jsp").forward(request, response);
+		if(loginStatus == 1){
+			//success;
+			session.setAttribute("list_condition", 0);
+			request.getRequestDispatcher("/list/list_emp.jsp").forward(request, response);
+		}else if(loginStatus == 2){
+			session.setAttribute("list_condition", 0);
+			request.getRequestDispatcher("/list/list.jsp").forward(request, response);
+		}
 
 	}
 

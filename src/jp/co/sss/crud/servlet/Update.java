@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import jp.co.sss.crud.bean.Employee;
+import jp.co.sss.crud.db.EmployeeDAO;
+
 /**
  * Servlet implementation class Update
  */
@@ -22,7 +25,16 @@ public class Update extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		String emp_id = request.getParameter("emp_id");
+		Employee emp = new Employee();
+		emp = EmployeeDAO.selectWhereSQLForUpdate("employee", emp_id);
 		session.setAttribute("update_emp_id", emp_id);
+		session.setAttribute("emp_name", emp.getEmp_name());
+		session.setAttribute("emp_pass", emp.getEmp_pass());
+		session.setAttribute("gender", emp.getGender());
+		session.setAttribute("emp_birth", emp.getBirthday());
+		session.setAttribute("emp_addr", emp.getAddress());
+		session.setAttribute("authority", emp.getAuthority());
+		session.setAttribute("dept_id", emp.getDept_id());
 		request.getRequestDispatcher("/update/update_input.jsp").forward(request, response);
 	}
 

@@ -33,7 +33,7 @@
 						<div class="row">
 							<div class="col-lg-4 offset-lg-4" style="text-align:center;">
 								<p>社員登録処理が完了しました。</p>
-								<a href="<%= stdHTML.rootPath %>list/list.jsp">一覧表示に戻る</a>
+								<a href="<%= stdHTML.rootPath %>list/list">一覧表示に戻る</a>
 							</div>
 						</div>
 					</div>

@@ -30,9 +30,9 @@ public class SearchName extends HttpServlet {
 		session.setAttribute("list_condition", con);
 		session.setAttribute("search_name", emp_name);
 		if(EmployeeDAO.selectAllSQL("employee", "emp_name", emp_name, true)!=null){
-			request.getRequestDispatcher("list/list.jsp").forward(request, response);
+			request.getRequestDispatcher("/list/list").forward(request, response);
 		}else{
-			request.getRequestDispatcher("list/list_empty.jsp").forward(request, response);
+			request.getRequestDispatcher("/list/list_empty.jsp").forward(request, response);
 		}
 	}
 

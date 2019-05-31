@@ -9,8 +9,12 @@
     import="jp.co.sss.crud.util.HTMLStructure"%>
 <%
 	HTMLStructure stdHTML = new HTMLStructure();
-	Employee emp = new Employee();
-	emp = EmployeeDAO.selectWhereSQLForUpdate("employee", (String)session.getAttribute("update_emp_id"));
+	String emp_name = (String)session.getAttribute("emp_name");
+	String emp_addr = (String)session.getAttribute("emp_addr");
+	String authority = (String)session.getAttribute("authority");
+	String emp_birth = (String)session.getAttribute("emp_birth");
+	String dept_id = (String)session.getAttribute("dept_id");
+	String gender = (String)session.getAttribute("gender");
 %>
 <html lang="jp">
 	<head>
@@ -42,7 +46,7 @@
 										<label for="emp_pw" style="display:block;text-align:right;">パスワード：</label>
 									</div>
 									<div class="col-lg-4">
-										<input type="password" class="form-control" id="emp_pw" name="emp_pw" value="<%=emp.getEmp_pass() %>"/>
+										<input type="password" class="form-control" id="emp_pw" name="emp_pw" value="<%=(String)session.getAttribute("emp_pass")%>"/>
 									</div>
 								</div>
 								<div class="row form-group">
@@ -50,7 +54,7 @@
 										<label for="emp_name" style="display:block;text-align:right;">社員名：</label>
 									</div>
 									<div class="col-lg-4">
-										<input type="text" class="form-control" id="emp_name" name="emp_name" value="<%=emp.getEmp_name() %>">
+										<input type="text" class="form-control" id="emp_name" name="emp_name" value="<%=emp_name%>">
 									</div>
 								</div>
 								<div class="row form-group">
@@ -60,7 +64,7 @@
 									<div class="col-lg-4">
 										<div class="form-check-inline">
 											<label class="form-check-label" for="sex1">
-												<%if(Integer.parseInt(emp.getGender())==1){ %>
+												<%if(Integer.parseInt(gender)==1){ %>
 												<input type="radio" class="form-check-input" id="sex1" name="gender" value="1" checked="checked">男性
 												<%}else { %>
 												<input type="radio" class="form-check-input" id="sex1" name="gender" value="1">男性
@@ -69,7 +73,7 @@
 										</div>
 										<div class="form-check-inline">
 											<label class="form-check-label" for="sex2">
-												<%if(Integer.parseInt(emp.getGender())==1){ %>
+												<%if(Integer.parseInt(gender)==1){ %>
 												<input type="radio" class="form-check-input" id="sex2" name="gender" value="2">女性
 												<%}else{ %>
 												<input type="radio" class="form-check-input" id="sex2" name="gender" value="2" checked="checked">女性
@@ -83,7 +87,7 @@
 										<label for="emp_addr" style="display:block;text-align:right;">住所：</label>
 									</div>
 									<div class="col-lg-4">
-										<input type="text" class="form-control" id="emp_addr" name="emp_addr" value="<%=emp.getAddress() %>"/>
+										<input type="text" class="form-control" id="emp_addr" name="emp_addr" value="<%=emp_addr%>"/>
 									</div>
 								</div>
 								<div class="row form-group">
@@ -91,7 +95,7 @@
 										<label for="emp_birth" style="display:block;text-align:right;">誕生日：</label>
 									</div>
 									<div class="col-lg-4">
-										<input type="text" class="form-control" id="emp_birth" name="emp_birth" value="<%=emp.getBirthday() %>"/>
+										<input type="text" class="form-control" id="emp_birth" name="emp_birth" value="<%=emp_birth%>"/>
 									</div>
 									<div class="col-lg-3">
 										<p>(YYYY/MM/DD)</p>
@@ -104,7 +108,7 @@
 									<div class="col-lg-4">
 										<div class="form-check-inline">
 											<label class="form-check-label" for="notAdmin">
-												<%if(Integer.parseInt(emp.getAuthority())  == 1) {%>
+												<%if(Integer.parseInt(authority)== 1) {%>
 												<input type="radio" class="form-check-input" id="notAdmin" name="authority" value="1" checked="checked">一般
 												<%}else{ %>
 												<input type="radio" class="form-check-input" id="notAdmin" name="authority" value="1">一般
@@ -113,7 +117,7 @@
 										</div>
 										<div class="form-check-inline">
 											<label class="form-check-label" for="admin">
-												<%if(Integer.parseInt(emp.getAuthority())  == 1) {%>
+												<%if(Integer.parseInt(authority)== 1) {%>
 												<input type="radio" class="form-check-input" id="admin" name="authority" value="2" >管理者
 												<%}else{ %>
 												<input type="radio" class="form-check-input" id="admin" name="authority" value="2" checked="checked">管理者
@@ -128,11 +132,11 @@
 									</div>
 									<div class="col-lg-4">
 										<select class="form-control" id="dept_id" name="dept_id">
-											<%if( Integer.parseInt(emp.getDept_id()) == 1 ){%>
+											<%if( Integer.parseInt(dept_id) == 1 ){%>
 											<option value="1" selected="selected">営業部</option>
 											<option value="2">経理部</option>
 											<option value="3">総務部</option>
-											<%}else if(Integer.parseInt(emp.getDept_id()) == 2 ){%>
+											<%}else if(Integer.parseInt(dept_id) == 2 ){%>
 											<option value="1">営業部</option>
 											<option value="2" selected="selected">経理部</option>
 											<option value="3">総務部</option>
@@ -151,7 +155,7 @@
 								</div>
 								<div class="row" style="margin-top:5px;">
 									<div class="col-lg-3 offset-lg-5">
-										<a class="btn btn-info" href="<%=stdHTML.rootPath%>list/list.jsp">戻る</a>
+										<a class="btn btn-info" href="<%=stdHTML.rootPath%>list/list">戻る</a>
 									</div>
 								</div>
 							</div>

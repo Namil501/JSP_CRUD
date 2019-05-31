@@ -35,13 +35,15 @@
 						</div>
 						<div class="row">
 							<div class="col-3 offset-lg-9">
-								<a href="#">新規社員登録</a>
+								<%if((int)session.getAttribute("login_status")==2){ %>
+								<a href="<%= stdHTML.rootPath %>regist/regist_input.jsp">新規社員登録</a>
+								<%} %>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-4 offset-lg-4" style="text-align:center;">
 								<p>該当する社員は存在しません。</p>
-								<a href="<%=stdHTML.rootPath%>list/list.html">一覧表示に戻る</a>
+								<a href="<%=stdHTML.rootPath%>list/list">一覧表示に戻る</a>
 							</div>
 						</div>
 					</div>

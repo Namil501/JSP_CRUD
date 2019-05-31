@@ -34,23 +34,25 @@ public class Login extends HttpServlet {
 		String pw = request.getParameter("emp_pw");
 		int loginStatus = dao.login(id, pw);
 		String user_name = EmployeeDAO.searchDept(Integer.toString(id), false);
-		session.setAttribute("login_status", loginStatus);
-		session.setAttribute("user_name", user_name);
 		if(loginStatus == 1){
-			//success
+			//success;
+			session.setAttribute("login_status", loginStatus);
+			session.setAttribute("user_name", user_name);
 			session.setAttribute("login_emp_id", id);
 			session.setAttribute("list_condition", 0);
 			request.getRequestDispatcher("list/list_emp.jsp").forward(request, response);
 		}else if(loginStatus == 2){
+			session.setAttribute("login_status", loginStatus);
+			session.setAttribute("user_name", user_name);
 			session.setAttribute("login_emp_id", id);
 			session.setAttribute("list_condition", 0);
-			request.getRequestDispatcher("list/list.jsp").forward(request, response);
+			request.getRequestDispatcher("/list/list.jsp").forward(request, response);
 		}else{
 			System.out.println("login fail");
 			out.println("<meta charset='UTF-8'>");
 			out.println("<script>");
-			out.println("alert('ログイン失敗');");
-            out.println("location.href='servlet_crud/index.jsp';");
+			out.println("alert('社員ID、またはパスワードが間違っています。');");
+            out.println("location.href='index.jsp';");
 			out.println("</script>");
 		}
 
